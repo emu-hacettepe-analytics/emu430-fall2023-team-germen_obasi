@@ -17,7 +17,7 @@ This is our template.
 
 3.  [Tuncay Özkardeş](https://www.youtube.com/watch?v=hGMgXsggorg)
 
-4.  [Baran Acarlı](https://github.com/emu-hacettepe-analytics/emu430-fall2023-baranacarli)
+4.  [Muharrem Baran Acarlı](https://github.com/emu-hacettepe-analytics/emu430-fall2023-baranacarli)
 
 5.  [Ayberk Bakılan](https://github.com/emu-hacettepe-analytics/emu430-fall2023-AyberkB98)
 
