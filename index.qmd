@@ -29,11 +29,4 @@ In this project we did in the Data Analysis course, we will use the data on happ
 
 # Data Set
 
-# Literacy
-https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=yXmIYK8WxbFjx9vwEP4DRDs/0QI39KP4NNmdD6DRUPH18uHwGPANE1RP22gwvNrY
-
-# Happiness
-https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=N89Qbttng2OjG24yrCEBzaOzuq4X8by6elSnnwevHden73AZWfHzCEqdOEI/YDAs
-
-# Population
-https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=f2jiwkpabpX7vcxzn4xamSZjOnq4344Y0rlb9MSlQBzyaBzjBG2iLIb2RP0Rk03d
+[Data](final_data.RData)
