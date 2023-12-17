@@ -23,8 +23,6 @@ This is our template.
 
 6.  [Mehmet Ali Genç](https://github.com/emu-hacettepe-analytics/emu430-fall2023-maligenc)
 
-
 # Project Topic
 
 # Data Set
-
