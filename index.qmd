@@ -11,17 +11,17 @@ This is our template.
 
 # Team Members
 
-1.  [Berke Pekşen](https://github.com/emu-hacettepe-analytics/emu430-fall2023-bpeksjen)
+1.  [Berke Pekşen](https://emu-hacettepe-analytics.github.io/emu430-fall2023-bpeksjen/)
 
-2.  [Tuna Merih Germen](https://github.com/emu-hacettepe-analytics/emu430-fall2023-tunagermen)
+2.  [Tuna Merih Germen](https://emu-hacettepe-analytics.github.io/emu430-fall2023-tunagermen/)
 
 3.  [Tuncay Özkardeş](https://www.youtube.com/watch?v=hGMgXsggorg)
 
-4.  [Muharrem Baran Acarlı](https://github.com/emu-hacettepe-analytics/emu430-fall2023-baranacarli)
+4.  [Muharrem Baran Acarlı](https://emu-hacettepe-analytics.github.io/emu430-fall2023-baranacarli/)
 
-5.  [Ayberk Bakılan](https://github.com/emu-hacettepe-analytics/emu430-fall2023-AyberkB98)
+5.  [Ayberk Bakılan](https://emu-hacettepe-analytics.github.io/emu430-fall2023-AyberkB98/)
 
-6.  [Mehmet Ali Genç](https://github.com/emu-hacettepe-analytics/emu430-fall2023-maligenc)
+6.  [Mehmet Ali Genç](https://emu-hacettepe-analytics.github.io/emu430-fall2023-maligenc/)
 
 # Project Topic
 
