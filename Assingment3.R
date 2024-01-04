@@ -56,8 +56,8 @@ print(happy_pop_total_ratio)
 
 
 ggplot(data, aes(x = Year)) +
-    geom_line(aes(y = as.numeric(`Literate(%)`), color = "red", group=1)) +
-  geom_line(aes(y = happy_pop_total_ratio, color = "blue", group=2))
-  
+    geom_line(aes(y = as.numeric(`Literate(%)`), color = "red", group=2)) +
+  geom_line(aes(y = happy_pop_total_ratio, color = "blue", group=1)) + 
+  labs(title = "Literacy and Happiness by Years") + ylab("Literate(%)")
   
 #GRAPH---4
