@@ -61,3 +61,11 @@ ggplot(data, aes(x = Year)) +
   labs(title = "Literacy and Happiness by Years") + ylab("Literate(%)")
   
 #GRAPH---4
+
+
+ggplot(data, aes(x = Year)) +
+  geom_line(aes(y = as.numeric(rate_of_change), color = "red", group=2)) +
+  geom_line(aes(y = (happy_pop_total_ratio |> select(1:14)), color = "blue", group=1)) + 
+  labs(title = "Literacy and Happiness by Years") + ylab("Literate(%)")
+
+
