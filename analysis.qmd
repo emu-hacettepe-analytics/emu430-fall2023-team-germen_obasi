@@ -153,4 +153,15 @@ ggplot(data, aes(x = Year)) +
     geom_line(aes(y = as.numeric(`Literate(%)`), color = "red", group=2)) +
   geom_line(aes(y = happy_pop_total_ratio, color = "blue", group=1)) + 
   labs(title = "Literacy and Happiness by Years") + ylab("Literate(%)")
+
+
+#Pie Plot
+
+happiness_percentages <- data[11, c("Happy(18-24)(%)", "Happy(25-34)(%)", "Happy(35-44)(%)", 
+                                    "Happy(45-54)(%)", "Happy(55-64)(%)", "Happy(65+)(%)")]
+happiness_percentages
+actual_populations <- as.numeric(happiness_percentages)
+
+pie(actual_populations, labels = (c("Happy(18-24)(%)", "Happy(25-34)(%)", "Happy(35-44)(%)", 
+                                            "Happy(45-54)(%)", "Happy(55-64)(%)", "Happy(65+)(%)")), main = "Population Distribution by Age Group (2018)")
 ```

@@ -1,6 +1,5 @@
 library(tidyverse)
 
-
 data <- get(load("final_data.RData"))
 ages <- c("Happy(18-24)(%)","Happy(25-34)(%)","Happy(35-44)(%)","Happy(45-54)(%)","Happy(55-64)(%)","Happy(65+)(%)")
 year_ages <- data |> select(Year, ages)
@@ -62,10 +61,25 @@ ggplot(data, aes(x = Year)) +
   
 #GRAPH---4
 
+happy_pop_total_ratio_2 <- happy_pop_total_ratio[1:14]
+happy_pop_total_ratio_2
 
-ggplot(data, aes(x = Year)) +
+df_2 <- data.frame(x_axis,rate_of_change, happy_pop_total_ratio_2)
+df_2
+
+ggplot(df_2, aes(x = x_axis)) +
   geom_line(aes(y = as.numeric(rate_of_change), color = "red", group=2)) +
-  geom_line(aes(y = (happy_pop_total_ratio |> select(1:14)), color = "blue", group=1)) + 
+  geom_line(aes(y = happy_pop_total_ratio_2, color = "blue", group=1)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   labs(title = "Literacy and Happiness by Years") + ylab("Literate(%)")
 
 
+#Pie Plot
+
+happiness_percentages <- data[11, c("Happy(18-24)(%)", "Happy(25-34)(%)", "Happy(35-44)(%)", 
+                                    "Happy(45-54)(%)", "Happy(55-64)(%)", "Happy(65+)(%)")]
+happiness_percentages
+actual_populations <- as.numeric(happiness_percentages)
+
+pie(actual_populations, labels = (c("Happy(18-24)(%)", "Happy(25-34)(%)", "Happy(35-44)(%)", 
+                                            "Happy(45-54)(%)", "Happy(55-64)(%)", "Happy(65+)(%)")), main = "Population Distribution by Age Group (2018)")
