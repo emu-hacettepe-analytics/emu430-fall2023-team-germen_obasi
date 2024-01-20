@@ -9,6 +9,10 @@ execute:
 
 
 
+
+
+
+
 ```
 About this site
 
@@ -202,6 +206,41 @@ for (age_group in age_groups) {
 for (age_group in age_groups) {
   print(plots_list[[age_group]])
 }
+
+
+```
+
+```{r}
+
+
+library(corrplot)
+
+
+your_data <- get(load('testing_data.RData'))
+
+selected_columns <- c("Literate(%)", "Illiterate(%)", "Pop(Total)",
+                       "Pop(18-24)", "Pop(25-34)", "Pop(35-44)",
+                       "Pop(45-54)", "Pop(55-64)", "Pop(65+)",
+                       "Happy(18-24)(%)", "Neutral(18-24)(%)", "Unhappy(18-24)(%)",
+                       "Happy(25-34)(%)", "Neutral(25-34)(%)", "Unhappy(25-34)(%)",
+                       "Happy(35-44)(%)", "Neutral(35-44)(%)", "Unhappy(35-44)(%)",
+                       "Happy(45-54)(%)", "Neutral(45-54)(%)", "Unhappy(45-54)(%)",
+                       "Happy(55-64)(%)", "Neutral(55-64)(%)", "Unhappy(55-64)(%)",
+                       "Happy(65+)(%)", "Neutral(65+)(%)", "Unhappy(65+)(%)")
+
+
+selected_data <- your_data[, selected_columns]
+
+selected_data[] <- lapply(selected_data, function(x) as.numeric(as.character(x)))
+
+
+correlation_matrix <- cor(selected_data, use = "complete.obs")
+
+par(mar = c(200, 200, 200, 200))  
+corrplot(correlation_matrix, method = "color", type = "upper", tl.col = "black", tl.srt = 45,
+         addCoef.col = "black", number.cex = 0.7, tl.cex = 0.7)
+
+
 
 
 ```
