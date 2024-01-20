@@ -6,9 +6,7 @@ execute:
   eval: false
 ---
 
-About this site
-
-print(final_data)
+This page involves the analysis part of our project.
 
 ---
 code-fold: true
@@ -120,6 +118,7 @@ ggplot(your_data, aes(x = Year)) +
 
 
 ```
+
 ```{r}
  library(ggplot2)
 your_data <- get(load('testing_data.RData'))
