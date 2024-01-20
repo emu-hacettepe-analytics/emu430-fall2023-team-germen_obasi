@@ -5,7 +5,11 @@ code-summary: "Show the code"
 execute:
   eval: false
 ---
+```{r}
 
+
+
+```
 About this site
 
 print(final_data)
@@ -164,4 +168,111 @@ actual_populations <- as.numeric(happiness_percentages)
 
 pie(actual_populations, labels = (c("Happy(18-24)(%)", "Happy(25-34)(%)", "Happy(35-44)(%)", 
                                             "Happy(45-54)(%)", "Happy(55-64)(%)", "Happy(65+)(%)")), main = "Population Distribution by Age Group (2018)")
+```
+
+```{r}
+
+library(ggplot2)
+your_data <- get(load('testing_data.RData'))
+
+ggplot(your_data, aes(x = Year)) +
+  geom_point(aes(y = `Happy(18-24)(%)`, color = "Happy(18-24)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Neutral(18-24)(%)`, color = "Neutral(18-24)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Unhappy(18-24)(%)`, color = "Unhappy(18-24)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Happy(25-34)(%)`, color = "Happy(25-34)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Neutral(25-34)(%)`, color = "Neutral(25-34)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Unhappy(25-34)(%)`, color = "Unhappy(25-34)"), position = position_jitter(width = 0.2)) +
+
+
+
+  labs(title = "Scatter Plot of Happy, Neutral, and Unhappy People of Younger Age Group",
+       x = "Year",
+       y = "Percentage") +
+  scale_color_manual(values = c("Happy(18-24)" = "blue", "Neutral(18-24)" = "green", "Unhappy(18-24)" = "red",
+                                "Happy(25-34)" = "blue", "Neutral(25-34)" = "green", "Unhappy(25-34)" = "red")) +
+  theme_minimal()
+
+
+
+```
+```{r}
+ library(ggplot2)
+your_data <- get(load('testing_data.RData'))
+
+ggplot(your_data, aes(x = Year)) +
+  geom_point(aes(y = `Happy(35-44)(%)`, color = "Happy(35-44)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Neutral(35-44)(%)`, color = "Neutral(35-44)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Unhappy(35-44)(%)`, color = "Unhappy(35-44)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Happy(45-54)(%)`, color = "Happy(45-54)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Neutral(45-54)(%)`, color = "Neutral(45-54)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Unhappy(45-54)(%)`, color = "Unhappy(45-54)"), position = position_jitter(width = 0.2)) +
+
+  labs(title = "Scatter Plot of Happy, Neutral, and Unhappy People Middle Aged Group",
+       x = "Year",
+       y = "Percentage") +
+  scale_color_manual(values = c("Happy(35-44)" = "blue", "Neutral(35-44)" = "green", "Unhappy(35-44)" = "red",
+                                "Happy(45-54)" = "blue", "Neutral(45-54)" = "green", "Unhappy(45-54)" = "red")) +
+  theme_minimal()
+
+
+```
+
+```{r}
+library(ggplot2)
+your_data <- get(load('testing_data.RData'))
+
+ggplot(your_data, aes(x = Year)) +
+  geom_point(aes(y = `Happy(55-64)(%)`, color = "Happy(55-64)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Neutral(55-64)(%)`, color = "Neutral(55-64)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Unhappy(55-64)(%)`, color = "Unhappy(55-64)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Happy(65+)(%)`, color = "Happy(65+)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Neutral(65+)(%)`, color = "Neutral(65+)"), position = position_jitter(width = 0.2)) +
+  geom_point(aes(y = `Unhappy(65+)(%)`, color = "Unhappy(65+)"), position = position_jitter(width = 0.2)) +
+
+  labs(title = "Scatter Plot of Happy, Neutral, and Unhappy People of Older Age Group",
+       x = "Year",
+       y = "Percentage") +
+  scale_color_manual(values = c("Happy(55-64)" = "blue", "Neutral(55-64)" = "green", "Unhappy(55-64)" = "red",
+                                "Happy(65+)" = "blue", "Neutral(65+)" = "green", "Unhappy(65+)" = "red")) +
+  theme_minimal()
+
+
+```
+
+```{r}
+library(ggplot2)
+
+
+your_data <- get(load('testing_data.RData'))
+
+age_groups <- c("18-24", "25-34", "35-44", "45-54", "55-64", "65+")
+
+
+plots_list <- list()
+
+
+for (age_group in age_groups) {
+
+  age_group_columns <- grep(paste0("(", age_group, ")"), colnames(your_data), value = TRUE)
+  
+
+  plot <- ggplot(your_data, aes(x = Year)) +
+    geom_bar(aes(y = get(paste0("Pop","(", age_group,")")), fill = factor(age_group)),
+             stat = "identity", position = "stack") +
+    labs(title = paste("Population Distribution - Age Group", age_group),
+         x = "Year",
+         y = "Total Population") +
+    theme_minimal() +
+    theme(legend.position = "top")
+  
+
+  plots_list[[age_group]] <- plot
+}
+
+
+for (age_group in age_groups) {
+  print(plots_list[[age_group]])
+}
+
+
 ```
