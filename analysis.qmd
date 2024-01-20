@@ -18,10 +18,6 @@ execute:
 ---
 
 ```{r}
-print(final_data)
-```
-
-```{r}
 library(tidyverse)
 
 
@@ -79,11 +75,14 @@ happy_pop_total_ratio <- sapply(as.numeric(happy_pop_total_df$Total_Happy), func
 print(happy_pop_total_ratio)
 
 
+
 ggplot(data, aes(x = Year)) +
     geom_line(aes(y = as.numeric(`Literate(%)`), color = "red", group=2)) +
   geom_line(aes(y = happy_pop_total_ratio, color = "blue", group=1)) + 
-  labs(title = "Literacy and Happiness by Years") + ylab("Literate(%)")
-
+  labs(title = "Literacy and Happiness by Years") + ylab("Literate(%)") +
+  scale_color_manual(values = c("red", "blue"),
+                     labels = c("Literate","Happy Population Total"))
+  
 
 #Pie Plot
 
