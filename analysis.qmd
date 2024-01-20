@@ -236,9 +236,7 @@ selected_data[] <- lapply(selected_data, function(x) as.numeric(as.character(x))
 
 correlation_matrix <- cor(selected_data, use = "complete.obs")
 
-par(mar = c(200, 200, 200, 200))  
-corrplot(correlation_matrix, method = "color", type = "upper", tl.col = "black", tl.srt = 45,
-         addCoef.col = "black", number.cex = 0.7, tl.cex = 0.7)
+corrplot(correlation_matrix, method = "color", type = "upper", tl.col = "black", tl.srt = 45)
 
 
 
