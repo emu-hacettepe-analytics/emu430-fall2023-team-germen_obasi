@@ -57,21 +57,11 @@ print(happy_pop_total_ratio)
 ggplot(data, aes(x = Year)) +
     geom_line(aes(y = as.numeric(`Literate(%)`), color = "red", group=2)) +
   geom_line(aes(y = happy_pop_total_ratio, color = "blue", group=1)) + 
-  labs(title = "Literacy and Happiness by Years") + ylab("Literate(%)")
+  labs(title = "Literacy and Happiness by Years") + ylab("Literate(%)") +
+  scale_color_manual(values = c("red", "blue"),
+                     labels = c("Literate",
+                                "Happy Population Total"))
   
-#GRAPH---4
-
-happy_pop_total_ratio_2 <- happy_pop_total_ratio[1:14]
-happy_pop_total_ratio_2
-
-df_2 <- data.frame(x_axis,rate_of_change, happy_pop_total_ratio_2)
-df_2
-
-ggplot(df_2, aes(x = x_axis)) +
-  geom_line(aes(y = as.numeric(rate_of_change), color = "red", group=2)) +
-  geom_line(aes(y = happy_pop_total_ratio_2, color = "blue", group=1)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  labs(title = "Literacy and Happiness by Years") + ylab("Literate(%)")
 
 
 #Pie Plot
