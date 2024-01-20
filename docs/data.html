@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -115,6 +149,14 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#literacy" id="toc-literacy" class="nav-link active" data-scroll-target="#literacy">Literacy</a></li>
   <li><a href="#happiness" id="toc-happiness" class="nav-link" data-scroll-target="#happiness">Happiness</a></li>
   <li><a href="#population" id="toc-population" class="nav-link" data-scroll-target="#population">Population</a></li>
+  <li><a href="#data-preprocessing" id="toc-data-preprocessing" class="nav-link" data-scroll-target="#data-preprocessing">Data Preprocessing</a>
+  <ul class="collapse">
+  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries">Libraries</a></li>
+  <li><a href="#dataset-literacy" id="toc-dataset-literacy" class="nav-link" data-scroll-target="#dataset-literacy">Dataset “Literacy”</a></li>
+  <li><a href="#dataset-population" id="toc-dataset-population" class="nav-link" data-scroll-target="#dataset-population">Dataset “Population”</a></li>
+  <li><a href="#dataset-happiness" id="toc-dataset-happiness" class="nav-link" data-scroll-target="#dataset-happiness">Dataset “Happiness”</a></li>
+  <li><a href="#final-dataset" id="toc-final-dataset" class="nav-link" data-scroll-target="#final-dataset">Final Dataset</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -153,8 +195,265 @@ ul.task-list li input[type="checkbox"] {
 <section id="population" class="level1">
 <h1>Population</h1>
 <p><a href="https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=f2jiwkpabpX7vcxzn4xamSZjOnq4344Y0rlb9MSlQBzyaBzjBG2iLIb2RP0Rk03d" class="uri">https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=f2jiwkpabpX7vcxzn4xamSZjOnq4344Y0rlb9MSlQBzyaBzjBG2iLIb2RP0Rk03d</a></p>
+</section>
+<section id="data-preprocessing" class="level1">
+<h1>Data Preprocessing</h1>
+<section id="libraries" class="level2">
+<h2 class="anchored" data-anchor-id="libraries">Libraries</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(zoo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'zoo'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric</code></pre>
+</div>
+</div>
+</section>
+<section id="dataset-literacy" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-literacy">Dataset “Literacy”</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_literate <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="st">"Population_by_literacy_and_gender.xls"</span>, <span class="at">col_names =</span> <span class="cn">TRUE</span>, <span class="at">range =</span> <span class="st">"A4:Q27"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...1`
+• `` -&gt; `...2`</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data_literate_t <span class="ot">&lt;-</span> <span class="fu">t</span>(data_literate)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data_literate_percentage <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(data_literate_t[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">17</span>)])</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>data_literate_end <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(data_literate_percentage, <span class="st">"Year"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_literate_end)[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Literate(%)"</span>, <span class="st">"Illiterate(%)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><img src="images/clipboard-3007552742.png" class="img-fluid"></p>
+</section>
+<section id="dataset-population" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-population">Dataset “Population”</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data_population <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="st">"Population.xls"</span>, <span class="at">col_names =</span> <span class="cn">TRUE</span>, <span class="at">range =</span> <span class="st">"A4:AA45"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data_population_clean <span class="ot">&lt;-</span> data_population[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">21</span>,<span class="dv">22</span>,<span class="dv">24</span>,<span class="dv">25</span>,<span class="dv">26</span>), <span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>)]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>data_population_clean_t <span class="ot">&lt;-</span> <span class="fu">t</span>(data_population_clean)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_population_clean_t) <span class="ot">&lt;-</span> data_population_clean_t[<span class="dv">1</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">32</span>]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>data_population_clean_t <span class="ot">&lt;-</span> data_population_clean_t[<span class="sc">-</span><span class="dv">1</span>,]</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>data_population_clean_t_sum <span class="ot">&lt;-</span> data_population_clean_t</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>){</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  data_population_clean_t_sum[,i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data_population_clean_t[,i]) <span class="sc">+</span> <span class="fu">as.numeric</span>(data_population_clean_t[,(i<span class="sc">+</span><span class="dv">16</span>)])</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>data_population_clean_t_sum <span class="ot">&lt;-</span> data_population_clean_t_sum[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">17</span><span class="sc">:</span><span class="dv">32</span>)]</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>data_population_clean_t_sum[,<span class="st">"15-19"</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(data_population_clean_t_sum[,<span class="st">"15-19"</span>]) <span class="sc">*</span> <span class="dv">2</span> <span class="sc">/</span> <span class="dv">5</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_population_clean_t_sum)[<span class="fu">colnames</span>(data_population_clean_t_sum) <span class="sc">==</span> <span class="st">"15-19"</span>] <span class="ot">&lt;-</span> <span class="st">"18-19"</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>data_population_by_age <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(data_population_clean_t_sum)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>data_population_by_age <span class="ot">&lt;-</span> data_population_by_age <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="st">"18-24"</span> <span class="ot">=</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">2</span>]) <span class="sc">+</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">3</span>])) <span class="sc">|&gt;</span> </span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"25-34"</span> <span class="ot">=</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">4</span>]) <span class="sc">+</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">5</span>])) <span class="sc">|&gt;</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"35-44"</span> <span class="ot">=</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">6</span>]) <span class="sc">+</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">7</span>])) <span class="sc">|&gt;</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"45-54"</span> <span class="ot">=</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">8</span>]) <span class="sc">+</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">9</span>])) <span class="sc">|&gt;</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"55-64"</span> <span class="ot">=</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">10</span>]) <span class="sc">+</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">11</span>])) <span class="sc">|&gt;</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"65+"</span> <span class="ot">=</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">12</span>]) <span class="sc">+</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">13</span>]) <span class="sc">+</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">14</span>]) <span class="sc">+</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">15</span>]) <span class="sc">+</span> <span class="fu">as.numeric</span>(data_population_by_age[,<span class="dv">16</span>]))</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>data_population_by_age <span class="ot">&lt;-</span> data_population_by_age[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">16</span>)]</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>column_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Pop(Total)"</span>, <span class="st">"Pop(18-24)"</span>, <span class="st">"Pop(25-34)"</span>, <span class="st">"Pop(35-44)"</span>, <span class="st">"Pop(45-54)"</span>, <span class="st">"Pop(55-64)"</span>, <span class="st">"Pop(65+)"</span>)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_population_by_age) <span class="ot">&lt;-</span> column_names</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>data_population_end <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(data_population_by_age, <span class="st">"Year"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><img src="images/clipboard-644634766.png" class="img-fluid"></p>
+</section>
+<section id="dataset-happiness" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-happiness">Dataset “Happiness”</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data_happiness <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="st">"Happiness-Age.xls"</span>, <span class="at">col_names =</span> <span class="cn">TRUE</span>, <span class="at">range =</span> <span class="st">"A5:H85"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...2`</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data_happiness_no_Na <span class="ot">&lt;-</span> data_happiness[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>, <span class="dv">25</span>, <span class="dv">29</span>, <span class="dv">33</span>, <span class="dv">37</span>, <span class="dv">41</span>, <span class="dv">45</span>, <span class="dv">49</span>, <span class="dv">53</span>, <span class="dv">57</span>, <span class="dv">61</span>, <span class="dv">65</span>, <span class="dv">69</span>, <span class="dv">73</span>, <span class="dv">77</span>),]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>data_happiness_no_Na <span class="ot">&lt;-</span> <span class="fu">na.locf</span>(data_happiness_no_Na, <span class="at">fromLast =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>data_happiness_no_Na_wider <span class="ot">&lt;-</span> data_happiness_no_Na <span class="sc">|&gt;</span> <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">"Age"</span>, <span class="at">value =</span> <span class="st">"Percentage"</span>, <span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>) <span class="sc">|&gt;</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="st">"Age"</span>), <span class="at">values_from =</span> <span class="st">"Percentage"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>column_names_happiness <span class="ot">&lt;-</span> <span class="fu">as.character</span>(<span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Happy(18-24)(%)"</span>, <span class="st">"Neutral(18-24)(%)"</span>, <span class="st">"Unhappy(18-24)(%)"</span>, <span class="st">"Happy(25-34)(%)"</span>, <span class="st">"Neutral(25-34)(%)"</span>, <span class="st">"Unhappy(25-34)(%)"</span>, <span class="st">"Happy(35-44)(%)"</span>, <span class="st">"Neutral(35-44)(%)"</span>, <span class="st">"Unhappy(35-44)(%)"</span>, <span class="st">"Happy(45-54)(%)"</span>, <span class="st">"Neutral(45-54)(%)"</span>, <span class="st">"Unhappy(45-54)(%)"</span>, <span class="st">"Happy(55-64)(%)"</span>, <span class="st">"Neutral(55-64)(%)"</span>, <span class="st">"Unhappy(55-64)(%)"</span>, <span class="st">"Happy(65+)(%)"</span>, <span class="st">"Neutral(65+)(%)"</span>, <span class="st">"Unhappy(65+)(%)"</span>))</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_happiness_no_Na_wider) <span class="ot">&lt;-</span> column_names_happiness</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>data_happiness_end <span class="ot">&lt;-</span> data_happiness_no_Na_wider</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>data_happiness_end<span class="sc">$</span>Year <span class="ot">&lt;-</span> <span class="fu">as.character</span>(data_happiness_end<span class="sc">$</span>Year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="final-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="final-dataset">Final Dataset</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>literate_population <span class="ot">&lt;-</span> <span class="fu">left_join</span>(data_literate_end, data_population_end, <span class="at">by =</span> <span class="st">"Year"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>literate_population_happiness <span class="ot">&lt;-</span> <span class="fu">left_join</span>(literate_population, data_happiness_end, <span class="at">by =</span> <span class="st">"Year"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>final_data <span class="ot">&lt;-</span> literate_population_happiness <span class="sc">|&gt;</span> <span class="fu">relocate</span>(<span class="st">"Pop(Total)"</span>, <span class="at">.after =</span> <span class="dv">28</span>)<span class="sc">|&gt;</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="st">"Pop(18-24)"</span>, <span class="at">.before =</span> <span class="st">"Happy(18-24)(%)"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="st">"Pop(25-34)"</span>, <span class="at">.before =</span> <span class="st">"Happy(25-34)(%)"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="st">"Pop(35-44)"</span>, <span class="at">.before =</span> <span class="st">"Happy(35-44)(%)"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="st">"Pop(45-54)"</span>, <span class="at">.before =</span> <span class="st">"Happy(45-54)(%)"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="st">"Pop(55-64)"</span>, <span class="at">.before =</span> <span class="st">"Happy(55-64)(%)"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="st">"Pop(65+)"</span>, <span class="at">.before =</span> <span class="st">"Happy(65+)(%)"</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>final_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Year        Literate(%)      Illiterate(%) Pop(18-24) Happy(18-24)(%)
+1  2008 90.007406587375414 9.9925934126245828    8730600        59.09000
+2  2009       9.081672e+01       9.183279e+00    8773965        57.41000
+3  2010       9.266060e+01       7.339400e+00    8778710        63.93000
+4  2011       9.410609e+01       5.893909e+00    8751624        69.50000
+5  2012       9.491975e+01       5.080252e+00    8748310        64.60000
+6  2013       9.525666e+01       4.743344e+00    8805113        65.09000
+7  2014       9.543963e+01       4.560366e+00    8871028        61.20000
+8  2015       9.560142e+01       4.398581e+00    8948367        63.78700
+9  2016       9.587569e+01       4.124307e+00    9015051        65.13400
+10 2017       9.615053e+01       3.849470e+00    9067145        61.30150
+11 2018       9.641868e+01       3.581320e+00    9116836        55.35172
+12 2019       9.674221e+01       3.257794e+00    9156716        56.67982
+13 2020       9.695450e+01       3.045501e+00    9155682        47.14917
+14 2021       9.714514e+01       2.854856e+00    9233464        44.48447
+15 2022       9.731440e+01       2.685604e+00    9160752        47.90992
+   Neutral(18-24)(%) Unhappy(18-24)(%) Pop(25-34) Happy(25-34)(%)
+1           28.30000         12.600000   12328944        55.69000
+2           31.45000         11.140000   12419892        55.92000
+3           26.49000          9.580000   12647889        64.36000
+4           25.00000          5.400000   12801867        62.00000
+5           26.00000          9.400000   12815605        65.60000
+6           26.82000          8.080000   12830001        60.29000
+7           30.40000          8.400000   12789496        57.90000
+8           28.41500          7.798000   12691399        58.60600
+9           26.30100          8.565000   12556452        61.96100
+10          29.90471          8.793788   12528466        58.57135
+11          35.13875          9.509531   12609622        53.24284
+12          33.75431          9.565878   12730328        52.04614
+13          38.63200         14.218833   12689848        46.81024
+14          35.10865         20.406887   12818686        46.57319
+15          36.41563         15.674453   12868216        46.76606
+   Neutral(25-34)(%) Unhappy(25-34)(%) Pop(35-44) Happy(35-44)(%)
+1           31.81000          12.50000   10070734        52.90000
+2           31.40000          12.68000   10181458        53.49000
+3           26.32000           9.32000   10160840        57.49000
+4           28.10000           9.90000   10403516        60.70000
+5           27.30000           7.10000   10795237        58.50000
+6           30.89000           8.81000   11134409        55.13000
+7           32.90000           9.20000   11428673        52.10000
+8           31.88100           9.51300   11755903        54.17800
+9           28.70200           9.33800   12128650        58.22800
+10          31.93865           9.49000   12301515        55.85570
+11          36.39018          10.36698   12422098        50.74637
+12          34.27075          13.68311   12552227        50.64638
+13          38.13035          15.05941   12708693        45.37726
+14          36.35105          17.07576   12933370        50.22658
+15          36.63361          16.60033   12972770        47.93897
+   Neutral(35-44)(%) Unhappy(35-44)(%) Pop(45-54) Happy(45-54)(%)
+1           32.30000          14.80000    7927348        51.74000
+2           33.20000          13.31000    8195696        51.31000
+3           31.18000          11.34000    8406580        58.93000
+4           30.30000           9.10000    8578520        59.70000
+5           30.20000          11.30000    8738619        55.50000
+6           33.76000          11.11000    8954555        54.49000
+7           36.00000          11.90000    9112684        51.50000
+8           33.98600          11.83500    9222988        51.66800
+9           30.84700          10.92400    9504758        58.34400
+10          33.27907          10.86522    9730609        53.08768
+11          36.92331          12.33032   10012031        47.84929
+12          37.16409          12.18953   10208932        49.70393
+13          39.44927          15.17347   10148298        46.22153
+14          33.48964          16.28378   10416745        48.75430
+15          35.71641          16.34462   10818158        47.96122
+   Neutral(45-54)(%) Unhappy(45-54)(%) Pop(55-64) Happy(55-64)(%)
+1           32.54000          15.71000    5066402        56.93000
+2           30.96000          17.73000    5306781        51.99000
+3           29.23000          11.84000    5756267        61.28000
+4           28.60000          11.70000    6020902        62.30000
+5           32.10000          12.40000    6147100        59.30000
+6           33.16000          12.35000    6315645        58.15000
+7           32.70000          15.80000    6527278        54.80000
+8           34.67000          13.66200    6789637        55.07000
+9           30.74600          10.91000    7058684        62.30000
+10          32.99353          13.91879    7337965        56.21379
+11          36.42783          15.72288    7618202        55.65419
+12          35.67746          14.61861    7944766        48.67123
+13          38.46309          15.31538    8151981        48.99747
+14          33.92495          17.32076    8319096        50.91547
+15          35.72690          16.31188    8483812        52.49462
+   Neutral(55-64)(%) Unhappy(55-64)(%) Pop(65+) Happy(65+)(%) Neutral(65+)(%)
+1           28.40000          14.67000  4893423      61.60000        24.36000
+2           29.22000          18.79000  5083414      54.27000        27.79000
+3           27.82000          10.90000  5327736      60.03000        27.06000
+4           26.40000          11.30000  5490715      57.80000        28.60000
+5           29.00000          11.70000  5682003      60.30000        28.70000
+6           28.88000          12.97000  5891694      63.36000        23.62000
+7           31.30000          14.00000  6192962      62.80000        24.60000
+8           30.70100          14.22900  6495239      56.84000        30.74000
+9           24.94200          12.75800  6651503      64.47600        25.03100
+10          31.01922          12.76699  6895385      66.09250        22.94151
+11          31.75922          12.58659  7186204      61.19950        26.75070
+12          35.50906          15.81971  7550727      58.54024        29.23618
+13          36.50081          14.50173  7953555      57.74405        30.43805
+14          33.71747          15.36706  8245124      56.16328        30.82194
+15          31.68412          15.82126  8451669      57.72237        28.60509
+   Unhappy(65+)(%) Pop(Total)
+1         14.03000   71517100
+2         17.94000   72561312
+3         12.92000   73722988
+4         13.50000   74724269
+5         11.10000   75627384
+6         13.01000   76667864
+7         12.60000   77695904
+8         12.42000   78741053
+9         10.49400   79814871
+10        10.96599   80810525
+11        12.04981   82003882
+12        12.22358   83154997
+13        11.81790   83614362
+14        13.01478   84680273
+15        13.67254   85279553</code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
