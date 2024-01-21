@@ -5,11 +5,13 @@ code-summary: "Show the code"
 execute:
   eval: false
 ---
+
 ```{r}
 
 
 
 ```
+
 About this site
 
 print(final_data)
@@ -23,7 +25,6 @@ execute:
 
 ```{r}
 library(tidyverse)
-
 
 data <- get(load("final_data.RData"))
 ages <- c("Happy(18-24)(%)","Happy(25-34)(%)","Happy(35-44)(%)","Happy(45-54)(%)","Happy(55-64)(%)","Happy(65+)(%)")
@@ -85,18 +86,23 @@ ggplot(data, aes(x = Year)) +
   geom_line(aes(y = happy_pop_total_ratio, color = "blue", group=1)) + 
   labs(title = "Literacy and Happiness by Years") + ylab("Literate(%)") +
   scale_color_manual(values = c("red", "blue"),
-                     labels = c("Literate","Happy Population Total"))
+                     labels = c("Happy Population Total","Literate"))
   
 
 #Pie Plot
 
 happiness_percentages <- data[11, c("Happy(18-24)(%)", "Happy(25-34)(%)", "Happy(35-44)(%)", 
                                     "Happy(45-54)(%)", "Happy(55-64)(%)", "Happy(65+)(%)")]
-happiness_percentages
+
 actual_populations <- as.numeric(happiness_percentages)
 
-pie(actual_populations, labels = (c("Happy(18-24)(%)", "Happy(25-34)(%)", "Happy(35-44)(%)", 
-                                            "Happy(45-54)(%)", "Happy(55-64)(%)", "Happy(65+)(%)")), main = "Population Distribution by Age Group (2018)")
+pie(actual_populations, labels = (c("Happy(18-24)(%)", "Happy(25-34)(%)", "Happy(35-44)(%)","Happy(45-54)(%)", "Happy(55-64)(%)", "Happy(65+)(%)")), main = "Population Distribution by Age Group (2018)")
+
+
+pie_labels <- paste0(round(100 * happiness_percentages/sum(happiness_percentages), 2), "%")
+
+pie(actual_populations, labels = pie_labels , main = "Population Distribution by Age Group (2018)")
+
 ```
 
 ```{r}
@@ -124,6 +130,7 @@ ggplot(your_data, aes(x = Year)) +
 
 
 ```
+
 ```{r}
  library(ggplot2)
 your_data <- get(load('testing_data.RData'))
