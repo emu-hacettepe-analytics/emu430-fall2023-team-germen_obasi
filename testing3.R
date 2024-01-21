@@ -1,33 +1,26 @@
+# Install and load ggplot2 if not already installed
+# install.packages("ggplot2")
 library(ggplot2)
 
-# Assuming your_data is your dataset loaded from the RData file
 your_data <- get(load('testing_data.RData'))
-# Define the age groups
-age_groups <- c("18-24", "25-34", "35-44", "45-54", "55-64", "65+")
 
-# Create a list to store the ggplot objects for each age group
-plots_list <- list()
+# Melt the data frame for better compatibility with ggplot2
+library(reshape2)
+melted_data <- melt(your_data, id.vars = c("Year"), measure.vars = c(
+  "Happy(18-24)(%)", "Neutral(18-24)(%)", "Unhappy(18-24)(%)",
+  "Happy(25-34)(%)", "Neutral(25-34)(%)", "Unhappy(25-34)(%)",
+  "Happy(35-44)(%)", "Neutral(35-44)(%)", "Unhappy(35-44)(%)",
+  "Happy(45-54)(%)", "Neutral(45-54)(%)", "Unhappy(45-54)(%)",
+  "Happy(55-64)(%)", "Neutral(55-64)(%)", "Unhappy(55-64)(%)",
+  "Happy(65+)(%)", "Neutral(65+)(%)", "Unhappy(65+)(%)"
+))
 
-# Loop through each age group
-for (age_group in age_groups) {
-  # Extract columns relevant to the current age group
-  age_group_columns <- grep(paste0("(", age_group, ")"), colnames(your_data), value = TRUE)
-  
-  # Create a stacked bar chart for the current age group
-  plot <- ggplot(your_data, aes(x = Year)) +
-    geom_bar(aes(y = get(paste0("Pop","(", age_group,")")), fill = factor(age_group)),
-             stat = "identity", position = "stack") +
-    labs(title = paste("Population Distribution - Age Group", age_group),
-         x = "Year",
-         y = "Total Population") +
-    theme_minimal() +
-    theme(legend.position = "top")
-  
-  # Store the plot in the list
-  plots_list[[age_group]] <- plot
-}
-
-# Print or display the plots
-for (age_group in age_groups) {
-  print(plots_list[[age_group]])
-}
+# Plotting Boxplots for Happiness Levels with ggplot2
+ggplot(melted_data, aes(x = variable, y = value, fill = variable)) +
+  geom_boxplot() +
+  labs(title = "Boxplots for Happiness Levels Across Age Groups",
+       x = "Age Group",
+       y = "Percentage",
+       fill = "Happiness Level") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
